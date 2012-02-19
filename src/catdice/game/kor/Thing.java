@@ -74,8 +74,8 @@ public class Thing {
 
 	private void scaleCenter(Graphics g, float zoom, float oldZoom, float locx,
 			float locy, int canvasWidth, int canvasHeight) {
-		int screenCenterX = (int) (canvasWidth / zoom / 2f - locx);
-		int screenCenterY = (int) (canvasHeight / zoom / 2f - locy);
+		int screenCenterX = (int) (canvasWidth / 2f - locx);
+		int screenCenterY = (int) (canvasHeight / 2f - locy);
 		Log.info("screenCenterX is " + screenCenterX);
 		Log.info("screenCenterY is " + screenCenterY);
 
