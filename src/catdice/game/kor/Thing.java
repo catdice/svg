@@ -55,52 +55,37 @@ public class Thing {
 			float oldZoom) throws SlickException {
 
 		// reset where everything is being drawn
-		g.scale(zoom, zoom);
+		// g.scale(zoom, zoom);
+		scaleCenter(g, zoom, oldZoom, locx, locy, canvasWidth, canvasHeight);
 		g.translate(locx, locy);
 
 		if (scaleX != 0 && scaleY != 0) {
 
 			g.scale(scaleX, scaleY);
 		}
-		//
-		// if (oldZoom != zoom) {
-		// if (oldZoom < zoom) {
-		// Log.info("Zooming in from " + oldZoom + " to " + zoom + "!");
-		// Log.info("locx is " + locx + " and " + " locy is " + locy);
-		//
-		// float nlocx = locx - canvasWidth / 2;// (zoom - oldZoom) * 100;
-		// float nlocy = locy - canvasHeight / 2;// (zoom - oldZoom) * 100;
-		// // g.translate(nlocx, nlocy);
-		// // g.translate(-canvasWidth / 2, -canvasHeight / 2);
-		// g.scale(zoom, zoom);
-		// // g.translate(canvasWidth / 2, canvasHeight / 2);
-		//
-		// Log.info("now, locx is " + locx + " and " + " locy is " + locy);
-		// } else {
-		// Log.info("Zooming out from " + oldZoom + " to " + zoom + "!");
-		// Log.info("locx is " + locx + " and " + " locy is " + locy);
-		//
-		// // float nlocx = locx + canvasWidth / 2;// (zoom - oldZoom) *
-		// // 100;
-		// // float nlocy = locy + canvasHeight / 2;// (zoom - oldZoom) *
-		// // 100;
-		// // g.translate(nlocx, nlocy);
-		// // g.translate(-canvasWidth / 2, -canvasHeight / 2);
-		// g.scale(zoom, zoom);
-		// // g.translate(canvasWidth / 2, canvasHeight / 2);
-		//
-		// Log.info("now, locx is " + locx + " and " + " locy is " + locy);
-		// }
-		// } else {
-		// g.scale(zoom, zoom);
-		// }
-
 
 		g.translate(x, y);
 
 		svg.render(g);
 
 		g.resetTransform();
+
+	}
+
+	private void scaleCenter(Graphics g, float zoom, float oldZoom, float locx,
+			float locy, int canvasWidth, int canvasHeight) {
+		int screenCenterX = (int) (canvasWidth / zoom / 2f - locx);
+		int screenCenterY = (int) (canvasHeight / zoom / 2f - locy);
+		Log.info("screenCenterX is " + screenCenterX);
+		Log.info("screenCenterY is " + screenCenterY);
+
+		Log.info("locx is " + locx + " and " + " locy is " + locy);
+
+		g.translate(screenCenterX, screenCenterY);
+		g.scale(zoom, zoom);
+		g.translate(locx, locy);
+
+		Log.info("now, locx is " + locx + " and " + " locy is " + locy);
 
 	}
 

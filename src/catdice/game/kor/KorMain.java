@@ -12,7 +12,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.renderer.Renderer;
 import org.newdawn.slick.svg.InkscapeLoader;
-import org.newdawn.slick.util.Log;
 
 public class KorMain extends BasicGame {
 	public KorMain(String title) {
@@ -64,18 +63,18 @@ public class KorMain extends BasicGame {
 	 */
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		float maxZoom = 2f;
+		float maxZoom = 10f;
 		float minZoom = 1f;
 		int maxy = 0;
 		int maxx = 0;
 		int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / zoom);
 		int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / zoom);
 
-		 Log.info("zoom is " + zoom);
-		 Log.info("minx is " + minx);
-		 Log.info("miny is " + miny);
-		 Log.info("x is " + locx);
-		 Log.info("y is " + locy);
+		// Log.info("zoom is " + zoom);
+		// Log.info("minx is " + minx);
+		// Log.info("miny is " + miny);
+		// Log.info("x is " + locx);
+		// Log.info("y is " + locy);
 
 		oldZoom = zoom;
 
