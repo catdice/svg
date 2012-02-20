@@ -12,6 +12,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.renderer.Renderer;
 import org.newdawn.slick.svg.InkscapeLoader;
+import org.newdawn.slick.util.Log;
 
 public class KorMain extends BasicGame {
 	public KorMain(String title) {
@@ -63,18 +64,23 @@ public class KorMain extends BasicGame {
 	 */
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		float maxZoom = 10f;
+		float maxZoom = 4f;
 		float minZoom = 1f;
-		int maxy = 0;
-		int maxx = 0;
-		int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / zoom);
-		int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / zoom);
+		// int maxy = 0;
+		// int maxx = 0;
+		// int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / zoom);
+		// int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / zoom);
 
-		// Log.info("zoom is " + zoom);
-		// Log.info("minx is " + minx);
-		// Log.info("miny is " + miny);
-		// Log.info("x is " + locx);
-		// Log.info("y is " + locy);
+		int maxy = (int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 2));
+		int maxx = (int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 2));
+		int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 2));
+		int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 2));
+
+		Log.info("zoom is " + zoom);
+		Log.info("minx is " + minx + " miny is " + miny);
+		Log.info("maxx is " + maxx + " maxy is " + maxy);
+		Log.info("locx is " + locx);
+		Log.info("locy is " + locy);
 
 		oldZoom = zoom;
 
@@ -151,6 +157,7 @@ public class KorMain extends BasicGame {
 			container.setDisplayMode(WIDTH, HEIGHT, false);
 			container.start();
 		} catch (SlickException e) {
+			Log.error("the game died");
 			e.printStackTrace();
 		}
 	}

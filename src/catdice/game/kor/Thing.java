@@ -56,12 +56,14 @@ public class Thing {
 
 		// reset where everything is being drawn
 		// g.scale(zoom, zoom);
-		scaleCenter(g, zoom, oldZoom, locx, locy, canvasWidth, canvasHeight);
+		scaleCenter(g, zoom, locx, locy, canvasWidth, canvasHeight);
 		g.translate(locx, locy);
 
+		// make the thing to its correct scale
 		if (scaleX != 0 && scaleY != 0) {
 
 			g.scale(scaleX, scaleY);
+
 		}
 
 		g.translate(x, y);
@@ -72,20 +74,19 @@ public class Thing {
 
 	}
 
-	private void scaleCenter(Graphics g, float zoom, float oldZoom, float locx,
-			float locy, int canvasWidth, int canvasHeight) {
+	private void scaleCenter(Graphics g, float zoom, float locx, float locy,
+			int canvasWidth, int canvasHeight) {
 		int screenCenterX = (int) (canvasWidth / 2f - locx);
 		int screenCenterY = (int) (canvasHeight / 2f - locy);
-		Log.info("screenCenterX is " + screenCenterX);
-		Log.info("screenCenterY is " + screenCenterY);
-
-		Log.info("locx is " + locx + " and " + " locy is " + locy);
+		// Log.info("screenCenterX is " + screenCenterX);
+		// Log.info("screenCenterY is " + screenCenterY);
+		// Log.info("locx is " + locx + " and " + " locy is " + locy);
 
 		g.translate(screenCenterX, screenCenterY);
 		g.scale(zoom, zoom);
 		g.translate(locx, locy);
 
-		Log.info("now, locx is " + locx + " and " + " locy is " + locy);
+		// Log.info("now, locx is " + locx + " and " + " locy is " + locy);
 
 	}
 
