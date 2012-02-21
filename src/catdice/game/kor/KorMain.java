@@ -29,8 +29,6 @@ public class KorMain extends BasicGame {
 
 	/** The zoom */
 	private float zoom = 1;
-	/* used for calculating previous zoom */
-	private float oldZoom = zoom;
 	/** The x location */
 	private float locx;
 	/** The y location */
@@ -44,9 +42,20 @@ public class KorMain extends BasicGame {
 
 		InkscapeLoader.RADIAL_TRIANGULATION_LEVEL = 2;
 
-		Thing one = new Thing("data/svg/griffin.svg", 0, 500, 500, .002f, .002f);
-		Thing two = new Thing("data/svg/orc.svg", 0, 0, 100, 100.5f, 0.5f);
-		Thing three = new Thing("data/svg/orc.svg", 0, 400, 0, 1f, 1f);
+		Thing one = new Thing("data/svg/griffin.svg", 0, 0, 0, 0);
+		one.setPosition(0, 0);
+		one.setScaleX(.002f);
+		one.setScaleY(.002f);
+
+		Thing two = new Thing("data/svg/orc.svg", 0, 0, 0, 0);
+		two.setPosition(0, 0);
+		two.setScaleX(.5f);
+		two.setScaleY(.5f);
+
+		Thing three = new Thing("data/svg/orc.svg", 0, 0, 0, 0);
+		three.setPosition(0, 0);
+		three.setScaleX(1f);
+		three.setScaleY(1f);
 
 		things.add(one);
 		things.add(two);
@@ -65,10 +74,6 @@ public class KorMain extends BasicGame {
 			throws SlickException {
 		float maxZoom = 2f;
 		float minZoom = 1f;
-		// int maxy = 0;
-		// int maxx = 0;
-		// int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / zoom);
-		// int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / zoom);
 
 		int maxy = (int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 4));
 		int maxx = (int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 4));
@@ -80,8 +85,6 @@ public class KorMain extends BasicGame {
 		Log.info("maxx is " + maxx + " maxy is " + maxy);
 		Log.info("locx is " + locx);
 		Log.info("locy is " + locy);
-
-		oldZoom = zoom;
 
 		if (container.getInput().isKeyDown(Input.KEY_Q)) {
 			zoom += (delta * 0.01f);
@@ -134,9 +137,20 @@ public class KorMain extends BasicGame {
 			throws SlickException {
 
 		for (Thing t : things) {
-			t.renderThing(container, g, zoom, locx, locy, WIDTH, HEIGHT,
-					oldZoom);
+			t.renderThing(container, g, zoom, locx, locy, WIDTH, HEIGHT);
 		}
+	}
+
+	public void keyPressed(int key, char c) {
+		if (key != -1) {
+			;
+		}
+		// if (key == Input.KEY_Q) {
+		// zoom += (delta * 0.01f);
+		// if (zoom > maxZoom) {
+		// zoom = maxZoom;
+		// }
+		// }
 	}
 
 	/**
