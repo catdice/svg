@@ -44,9 +44,8 @@ public class KorMain extends BasicGame {
 
 		InkscapeLoader.RADIAL_TRIANGULATION_LEVEL = 2;
 
-		Thing one = new Thing("data/svg/griffin.svg", 0, -400, -400, .002f,
-				.002f);
-		Thing two = new Thing("data/svg/orc.svg", 0, 0, 400, 1.0f, 1.0f);
+		Thing one = new Thing("data/svg/griffin.svg", 0, 500, 500, .002f, .002f);
+		Thing two = new Thing("data/svg/orc.svg", 0, 0, 100, 100.5f, 0.5f);
 		Thing three = new Thing("data/svg/orc.svg", 0, 400, 0, 1f, 1f);
 
 		things.add(one);
@@ -64,17 +63,17 @@ public class KorMain extends BasicGame {
 	 */
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		float maxZoom = 4f;
+		float maxZoom = 2f;
 		float minZoom = 1f;
 		// int maxy = 0;
 		// int maxx = 0;
 		// int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / zoom);
 		// int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / zoom);
 
-		int maxy = (int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 2));
-		int maxx = (int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 2));
-		int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 2));
-		int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 2));
+		int maxy = (int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 4));
+		int maxx = (int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 4));
+		int minx = -(int) (((zoom / minZoom) * (WIDTH) - WIDTH) / (zoom * 4));
+		int miny = -(int) (((zoom / minZoom) * (HEIGHT) - HEIGHT) / (zoom * 4));
 
 		Log.info("zoom is " + zoom);
 		Log.info("minx is " + minx + " miny is " + miny);

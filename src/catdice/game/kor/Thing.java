@@ -84,6 +84,7 @@ public class Thing {
 
 		g.translate(screenCenterX, screenCenterY);
 		g.scale(zoom, zoom);
+		g.translate(-screenCenterX, -screenCenterY);
 		g.translate(locx, locy);
 
 		// Log.info("now, locx is " + locx + " and " + " locy is " + locy);
