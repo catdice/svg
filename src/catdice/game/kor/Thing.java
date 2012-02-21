@@ -82,13 +82,24 @@ public class Thing extends Actor {
 		return rv;
 	}
 
+	@Override
+	public void render(Graphics g) {
+		// make the thing to its correct scale
+		g.scale(scaleX, scaleY);
+		// move the thing to its correct spot
+		g.translate(x, y);
+		// draw the thing
+		svg.render(g);
+		g.resetTransform();
+	}
+
 	public void renderThing(GameContainer container, Graphics g, float zoom,
-			float locx, float locy, int canvasWidth, int canvasHeight)
-			throws SlickException {
+			float locx, float locy) throws SlickException {
 
 		// reset where everything is being drawn
 		// g.scale(zoom, zoom);
-		scaleCenter(g, zoom, locx, locy, canvasWidth, canvasHeight);
+		scaleCenter(g, zoom, locx, locy, container.getWidth(), container
+				.getHeight());
 		g.translate(locx, locy);
 
 		// make the thing to its correct scale
@@ -117,6 +128,30 @@ public class Thing extends Actor {
 		g.translate(locx, locy);
 
 		// Log.info("now, locx is " + locx + " and " + " locy is " + locy);
+
+	}
+
+	@Override
+	public Body getBody() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void preUpdate(int delta) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setWorld(World world) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(int delta) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -166,37 +201,6 @@ public class Thing extends Actor {
 
 	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
-	}
-
-	@Override
-	public Body getBody() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void preUpdate(int delta) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void render(Graphics g) {
-		g.translate(x, y);
-		svg.render(g);
-		g.resetTransform();
-	}
-
-	@Override
-	public void setWorld(World world) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(int delta) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
