@@ -24,13 +24,15 @@ public class Thing extends Actor {
 	private int xvel = 0;
 	private int yvel = 0;
 
-	/** where is the thing? */
-	private int x = 0;
-	private int y = 0;
+	/** The current frame of animation */
+	private int frame;
+	/** The timer controlling frame change */
+	private int frameTimer = 0;
+	/** The interval between animation frame change in milliseconds */
+	private int frameInterval = 100;
 
 	/** how scaled is the thing? */
-	private float scaleX = 1.0f;
-	private float scaleY = 1.0f;
+	private float scale;
 
 	/* the fileLoc looks like "data/svg/liftarn_Orc.svg" */
 	// public Thing(String fileLoc) {
@@ -52,23 +54,21 @@ public class Thing extends Actor {
 	 * @throws SlickException
 	 *             Indicates a failure to load resources for this thing
 	 */
-	public Thing(String fileLoc, float x, float y, float mass, float size)
-			throws SlickException {
+	public Thing(String fileLoc, float x, float y, float scale, float mass,
+			float size) throws SlickException {
 		super(x, y, mass, size);
+		this.scale = scale;
 		svg = loadSvg(fileLoc);
 
 	}
 
-	public Thing(String fileLoc, int xvel, int yvel, int x, int y,
-			float xScale, float yScale) {
-		super(yScale, yScale, yScale, yScale);
+	public Thing(String fileLoc, int xvel, int yvel, float x, float y,
+			float scale, float mass, float size) {
+		super(x, y, mass, size);
 		svg = loadSvg(fileLoc);
 		this.xvel = xvel;
 		this.yvel = yvel;
-		this.x = x;
-		this.y = y;
-		this.scaleX = xScale;
-		this.scaleY = yScale;
+		this.scale = scale;
 	}
 
 	private SimpleDiagramRenderer loadSvg(String fileName) {
@@ -85,9 +85,9 @@ public class Thing extends Actor {
 	@Override
 	public void render(Graphics g) {
 		// make the thing to its correct scale
-		g.scale(scaleX, scaleY);
+		g.scale(scale, scale);
 		// move the thing to its correct spot
-		g.translate(x, y);
+		g.translate(getX(), getY());
 		// draw the thing
 		svg.render(g);
 		g.resetTransform();
@@ -99,17 +99,13 @@ public class Thing extends Actor {
 		// reset where everything is being drawn
 		// g.scale(zoom, zoom);
 		scaleCenter(g, zoom, locx, locy, container.getWidth(), container
-				.getHeight());
+			.getHeight());
 		g.translate(locx, locy);
 
 		// make the thing to its correct scale
-		if (scaleX != 0 && scaleY != 0) {
+		g.scale(scale, scale);
 
-			g.scale(scaleX, scaleY);
-
-		}
-
-		g.translate(x, y);
+		g.translate(getX(), getY());
 
 		svg.render(g);
 
@@ -187,20 +183,12 @@ public class Thing extends Actor {
 		this.xvel = velocity;
 	}
 
-	public float getScaleX() {
-		return scaleX;
+	public float getScale() {
+		return scale;
 	}
 
-	public void setScaleX(float scaleX) {
-		this.scaleX = scaleX;
-	}
-
-	public float getScaleY() {
-		return scaleY;
-	}
-
-	public void setScaleY(float scaleY) {
-		this.scaleY = scaleY;
+	public void setScale(float scaleX) {
+		this.scale = scaleX;
 	}
 
 }

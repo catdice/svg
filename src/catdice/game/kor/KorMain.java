@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.renderer.Renderer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -155,18 +154,6 @@ public class KorMain extends StateBasedGame {
 	// }
 	// }
 
-	public void keyPressed(int key, char c) {
-		// if any key was pressed
-		if (key != -1) {
-			;
-		}
-
-		if (key == Input.KEY_ESCAPE) {
-			container.exit();
-		}
-
-	}
-
 	/**
 	 * Entry point to our simple test
 	 * 
@@ -177,10 +164,10 @@ public class KorMain extends StateBasedGame {
 		try {
 			Renderer.setRenderer(Renderer.VERTEX_ARRAY_RENDERER);
 			Renderer
-					.setLineStripRenderer(Renderer.QUAD_BASED_LINE_STRIP_RENDERER);
+				.setLineStripRenderer(Renderer.QUAD_BASED_LINE_STRIP_RENDERER);
 
 			AppGameContainer container = new AppGameContainer(
-					new KorMain("Kor"));
+				new KorMain("Kor"));
 			container.setDisplayMode(WIDTH, HEIGHT, false);
 			container.start();
 		} catch (SlickException e) {

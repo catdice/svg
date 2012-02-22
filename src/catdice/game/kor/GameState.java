@@ -20,6 +20,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameState extends BasicGameState {
 	/** The unique ID given to the state */
 	private static final int ID = 1;
+	private static int width;
+	private static int height;
 
 	/** The environment in which the physics demo is taking place */
 	private Environment env;
@@ -52,7 +54,9 @@ public class GameState extends BasicGameState {
 	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		background = new Image(600, 250);
+		width = container.getWidth();
+		height = container.getHeight();
+		background = new Image(width, height);
 
 		restart();
 	}
@@ -66,10 +70,10 @@ public class GameState extends BasicGameState {
 	private void restart() throws SlickException {
 		// TileSet set = new TileSet("res/tiles.xml");
 		// MapLoader loader = new MapLoader(set);
-		VectorEnvironment env = new VectorEnvironment(600, 250);// loader.load("res/testmap.txt");
+		VectorEnvironment env = new VectorEnvironment(width, height);// loader.load("res/testmap.txt");
 		env.init();
 
-		player = new Thing("data/svg/orc.svg", 100, 150, 1f, 24);
+		player = new Thing("data/svg/orc.svg", 10, 10, .4f, 10, 24);
 		env.addEntity(player);
 
 		this.env = env;
@@ -108,17 +112,14 @@ public class GameState extends BasicGameState {
 
 		g.translate((int) xoffset, (int) yoffset);
 
-		drawString(
-				g,
-				"'My Last Hoorah' - Slick+Phys2D Platformer Example - By Kevin Glass - http://www.cokeandcode.com",
-				0);
+		drawString(g, "Game Test", 0);
 		drawString(g,
-				"Cursors - Move   Ctrl - Jump   B - Show Bounds   R - Restart",
-				580);
+			"Cursors - Move   Ctrl - Jump   B - Show Bounds   R - Restart",
+			(int) (height - 20));
 	}
 
 	/**
-	 * Draw an clear string centred horizontally
+	 * Draw a clear string centered horizontally
 	 * 
 	 * @param g
 	 *            The graphics context on which to draw the string
@@ -128,9 +129,9 @@ public class GameState extends BasicGameState {
 	 *            The vertical location to draw at
 	 */
 	private void drawString(Graphics g, String str, int y) {
-		int x = (800 - g.getFont().getWidth(str)) / 2;
+		int x = (width - g.getFont().getWidth(str)) / 2;
 
-		g.setColor(Color.black);
+		g.setColor(Color.blue); // cool "shadow" text
 		g.drawString(str, x + 1, y + 1);
 		g.setColor(Color.white);
 		g.drawString(str, x, y);
@@ -145,6 +146,12 @@ public class GameState extends BasicGameState {
 			throws SlickException {
 		Input input = container.getInput();
 
+		// the forces applied for different actions. The move force is applied
+		// over and over so is reasonably small. The jump force is a one shot
+		// deal and so is reasonably big
+		float moveForce = 100;
+		float jumpForce = 20000;
+
 		// restart and bounds toggling
 		if (input.isKeyPressed(Input.KEY_R)) {
 			restart();
@@ -154,13 +161,31 @@ public class GameState extends BasicGameState {
 			showBounds = !showBounds;
 		}
 
-		// the forces applied for different actions. The move force is applied
-		// over and
-		// over so is reasonably small. The jump force is a one shot deal and so
-		// is reasonably
-		// big
-		float moveForce = 100;
-		float jumpForce = 20000;
+		if (input.isKeyDown(Input.KEY_LEFT)) {
+			player.applyForce(-moveForce, 0);
+		}
+		if (input.isKeyDown(Input.KEY_RIGHT)) {
+			player.applyForce(moveForce, 0);
+		}
+		if (player.onGround()) {
+			if ((input.isKeyPressed(Input.KEY_LCONTROL))
+					|| (input.isKeyPressed(Input.KEY_RCONTROL))) {
+				if (player.facingRight()) {
+					player.applyForce(0, -jumpForce);
+				} else {
+					player.applyForce(0, -jumpForce);
+				}
+			}
+		}
+		if (!input.isKeyDown(Input.KEY_LCONTROL)) {
+			if (player.jumping()) {
+				player.setVelocity(player.getVelX(), player.getVelY() * 0.95f);
+			}
+		}
+
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			container.exit();
+		}
 
 		totalDelta += delta;
 
@@ -197,17 +222,17 @@ public class GameState extends BasicGameState {
 			if (!input.isKeyDown(Input.KEY_LCONTROL)) {
 				if (player.jumping()) {
 					player.setVelocity(player.getVelX(),
-							player.getVelY() * 0.95f);
+						player.getVelY() * 0.95f);
 				}
 			}
 		}
 
-		// update the environemnt and hence the physics world
+		// update the environment and hence the physics world
 		env.update(delta);
 
 		// calculate screen position clamping to the bounds of the level
-		xoffset = player.getX() - 400;
-		yoffset = player.getY() - 300;
+		xoffset = player.getX() - width / 2; // TODO what is this?
+		yoffset = player.getY() - height / 2;
 
 		Rectangle bounds = env.getBounds();
 		if (xoffset < bounds.getX()) {
@@ -217,11 +242,11 @@ public class GameState extends BasicGameState {
 			yoffset = bounds.getY();
 		}
 
-		if (xoffset > (bounds.getX() + bounds.getWidth()) - 800) {
-			xoffset = (bounds.getX() + bounds.getWidth()) - 800;
+		if (xoffset > (bounds.getX() + bounds.getWidth()) - width) {
+			xoffset = (bounds.getX() + bounds.getWidth()) - width;
 		}
-		if (yoffset > (bounds.getY() + bounds.getHeight()) - 600) {
-			yoffset = (bounds.getY() + bounds.getHeight()) - 600;
+		if (yoffset > (bounds.getY() + bounds.getHeight()) - height) {
+			yoffset = (bounds.getY() + bounds.getHeight()) - height;
 		}
 	}
 }
