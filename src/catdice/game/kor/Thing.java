@@ -1,28 +1,16 @@
 package catdice.game.kor;
 
-import net.phys2d.raw.Body;
-import net.phys2d.raw.World;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.svg.InkscapeLoader;
 import org.newdawn.slick.svg.SimpleDiagramRenderer;
-import org.newdawn.slick.util.Log;
+
+import catdice.game.kor.util.VectorUtil;
 
 public class Thing extends Actor {
-	/** The svg image to display for the crate */
+	/** The svg image to display for the thing */
 	private SimpleDiagramRenderer svg;
-	/** The width of the crate */
-	private float width;
-	/** The height of the crate */
-	private float height;
-	/** The world to which the crate has been added */
-	private World world;
-
-	/** how fast the thing is moving */
-	private int xvel = 0;
-	private int yvel = 0;
+	private float scale;
 
 	/** The current frame of animation */
 	private int frame;
@@ -30,9 +18,6 @@ public class Thing extends Actor {
 	private int frameTimer = 0;
 	/** The interval between animation frame change in milliseconds */
 	private int frameInterval = 100;
-
-	/** how scaled is the thing? */
-	private float scale;
 
 	/* the fileLoc looks like "data/svg/liftarn_Orc.svg" */
 	// public Thing(String fileLoc) {
@@ -58,28 +43,8 @@ public class Thing extends Actor {
 			float size) throws SlickException {
 		super(x, y, mass, size);
 		this.scale = scale;
-		svg = loadSvg(fileLoc);
+		svg = VectorUtil.loadSvg(fileLoc);
 
-	}
-
-	public Thing(String fileLoc, int xvel, int yvel, float x, float y,
-			float scale, float mass, float size) {
-		super(x, y, mass, size);
-		svg = loadSvg(fileLoc);
-		this.xvel = xvel;
-		this.yvel = yvel;
-		this.scale = scale;
-	}
-
-	private SimpleDiagramRenderer loadSvg(String fileName) {
-		SimpleDiagramRenderer rv = null;
-		try {
-			rv = new SimpleDiagramRenderer(InkscapeLoader.load(fileName));
-		} catch (SlickException e) {
-			Log.error("SVG " + fileName + " was not loaded! " + e);
-		}
-
-		return rv;
 	}
 
 	@Override
@@ -93,7 +58,7 @@ public class Thing extends Actor {
 		g.resetTransform();
 	}
 
-	public void renderThing(GameContainer container, Graphics g, float zoom,
+	public void renderThings(GameContainer container, Graphics g, float zoom,
 			float locx, float locy) throws SlickException {
 
 		// reset where everything is being drawn
@@ -128,26 +93,14 @@ public class Thing extends Actor {
 	}
 
 	@Override
-	public Body getBody() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void preUpdate(int delta) {
-		// TODO Auto-generated method stub
+		super.preUpdate(delta);
 
-	}
-
-	@Override
-	public void setWorld(World world) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(int delta) {
-		// TODO Auto-generated method stub
+		frameTimer -= delta;
+		while (frameTimer < 0) {
+			frame++;
+			frameTimer += frameInterval;
+		}
 
 	}
 
@@ -157,30 +110,6 @@ public class Thing extends Actor {
 
 	public void setSvg(SimpleDiagramRenderer svg) {
 		this.svg = svg;
-	}
-
-	public int getVelocity() {
-		return xvel;
-	}
-
-	public int getXvel() {
-		return xvel;
-	}
-
-	public void setXvel(int xvel) {
-		this.xvel = xvel;
-	}
-
-	public int getYvel() {
-		return yvel;
-	}
-
-	public void setYvel(int yvel) {
-		this.yvel = yvel;
-	}
-
-	public void setVelocity(int velocity) {
-		this.xvel = velocity;
 	}
 
 	public float getScale() {

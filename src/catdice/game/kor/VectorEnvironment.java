@@ -13,6 +13,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
+import catdice.game.kor.struct.AbstractEnvironment;
+
 public class VectorEnvironment extends AbstractEnvironment {
 	/** The bounds of the entire environment */
 	private Rectangle bounds;
@@ -61,7 +63,7 @@ public class VectorEnvironment extends AbstractEnvironment {
 			if (shape instanceof Box) {
 				Box b = (Box) shape;
 				Vector2f[] verts = b.getPoints(body.getPosition(), body
-						.getRotation());
+					.getRotation());
 
 				org.newdawn.slick.geom.Polygon p = new org.newdawn.slick.geom.Polygon();
 				for (int k = 0; k < verts.length; k++) {

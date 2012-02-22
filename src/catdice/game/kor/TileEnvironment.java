@@ -20,6 +20,8 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 
+import catdice.game.kor.struct.AbstractEnvironment;
+
 /**
  * An environment based on a tilemap. The tile shapes are combined into more
  * performant polygons for the purpose of the physical world as part of the
@@ -107,7 +109,7 @@ public class TileEnvironment extends AbstractEnvironment {
 	public void setTile(int x, int y, Tile tile) {
 		images[x][y] = tile.getImage();
 		shapes[x][y] = tile.getShape().transform(
-				Transform.createTranslateTransform(x, y));
+			Transform.createTranslateTransform(x, y));
 	}
 
 	/**
@@ -287,7 +289,7 @@ public class TileEnvironment extends AbstractEnvironment {
 			if (shape instanceof Box) {
 				Box b = (Box) shape;
 				Vector2f[] verts = b.getPoints(body.getPosition(), body
-						.getRotation());
+					.getRotation());
 
 				org.newdawn.slick.geom.Polygon p = new org.newdawn.slick.geom.Polygon();
 				for (int k = 0; k < verts.length; k++) {

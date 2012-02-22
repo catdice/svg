@@ -11,6 +11,8 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import catdice.game.kor.struct.Environment;
+
 /**
  * Simple platform single state to render the tile map and the entities, update
  * the physical world and allow player input
@@ -39,7 +41,7 @@ public class GameState extends BasicGameState {
 	/** The interval to check the controls at */
 	private int controlInterval = 50;
 	/** True if we're showing the bounds of the environment's shapes */
-	private boolean showBounds = false;
+	private boolean showBounds = true;
 
 	/**
 	 * @see org.newdawn.slick.state.BasicGameState#getID()
@@ -73,8 +75,10 @@ public class GameState extends BasicGameState {
 		VectorEnvironment env = new VectorEnvironment(width, height);// loader.load("res/testmap.txt");
 		env.init();
 
-		player = new Thing("data/svg/orc.svg", 10, 10, .4f, 10, 24);
+		player = new Thing("data/svg/orc.svg", height / 2, width / 2, .2f, 20,
+			50); //TODO what does the 50 indicate?
 		env.addEntity(player);
+		env.addEntity(new Scenery(0, 0, 60, 60, 10));
 
 		this.env = env;
 	}
@@ -149,7 +153,7 @@ public class GameState extends BasicGameState {
 		// the forces applied for different actions. The move force is applied
 		// over and over so is reasonably small. The jump force is a one shot
 		// deal and so is reasonably big
-		float moveForce = 100;
+		float moveForce = 200;
 		float jumpForce = 20000;
 
 		// restart and bounds toggling
@@ -177,7 +181,7 @@ public class GameState extends BasicGameState {
 				}
 			}
 		}
-		if (!input.isKeyDown(Input.KEY_LCONTROL)) {
+		if (!input.isKeyDown(Input.KEY_SPACE)) {
 			if (player.jumping()) {
 				player.setVelocity(player.getVelX(), player.getVelY() * 0.95f);
 			}

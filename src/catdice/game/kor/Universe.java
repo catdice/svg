@@ -3,6 +3,8 @@ package catdice.game.kor;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
+import catdice.game.kor.struct.AbstractEnvironment;
+
 public class Universe extends AbstractEnvironment {
 
 	@Override

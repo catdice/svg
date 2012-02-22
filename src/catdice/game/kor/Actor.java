@@ -8,6 +8,8 @@ import net.phys2d.raw.shapes.Box;
 
 import org.newdawn.slick.Graphics;
 
+import catdice.game.kor.struct.AbstractEntity;
+
 /**
  * An actor is a special type of entity that handles more platformer like
  * dynamics.
@@ -259,7 +261,7 @@ public abstract class Actor extends AbstractEntity {
 		CollisionEvent[] events = world.getContacts(body);
 
 		for (int i = 0; i < events.length; i++) {
-			// if the point of collision was below the centre of the actor
+			// if the point of collision was below the center of the actor
 			// i.e. near the feet
 			if (events[i].getPoint().getY() > getY() + (size / 4)) {
 				// check the normal to work out which body we care about
