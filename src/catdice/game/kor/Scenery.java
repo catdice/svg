@@ -50,16 +50,18 @@ public class Scenery extends AbstractEntity {
 	 * @throws SlickException
 	 *             Indicates a failure to load the resources
 	 */
-	public Scenery(float x, float y, float width, float height, float mass)
-			throws SlickException {
+	public Scenery(String fileLoc, float x, float y, float width, float height,
+			float scale, float mass) throws SlickException {
 		this.width = width;
 		this.height = height;
 
+		this.scale = scale;
+
 		//		image = new Image("res/crate.png");
-		svg = VectorUtil.loadSvg("data/svg/orc.svg");
+		svg = VectorUtil.loadSvg(fileLoc);
 		body = new Body(new Box(width, height), mass);
 		body.setPosition(x, y);
-		body.setFriction(0.1f);
+		body.setFriction(1f);
 	}
 
 	/**
@@ -79,12 +81,12 @@ public class Scenery extends AbstractEntity {
 	 * @see org.newdawn.penguin.Entity#render(org.newdawn.slick.Graphics)
 	 */
 	public void render(Graphics g) {
-		g.translate(getX(), getY());
-		g.rotate(0, 0, (float) Math.toDegrees(body.getRotation()));
-		//		image.draw(-width / 2, -height / 2, width, height);
-
 		// make the thing to its correct scale
 		g.scale(scale, scale);
+		// move the thing to its correct spot
+		g.translate(getX(), getY());
+		g.rotate(0, 0, (float) Math.toDegrees(body.getRotation()));
+
 		svg.render(g);
 
 		g.rotate(0, 0, (float) -Math.toDegrees(body.getRotation()));
@@ -98,9 +100,10 @@ public class Scenery extends AbstractEntity {
 		this.world = world;
 	}
 
-	/**
-	 * @see org.newdawn.penguin.Entity#update(int)
-	 */
+	@Override
 	public void update(int delta) {
+		// TODO Auto-generated method stub
+
 	}
+
 }

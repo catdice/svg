@@ -75,11 +75,28 @@ public class GameState extends BasicGameState {
 		VectorEnvironment env = new VectorEnvironment(width, height);// loader.load("res/testmap.txt");
 		env.init();
 
-		player = new Thing("data/svg/orc.svg", height / 2, width / 2, .2f, 20,
-			50); //TODO what does the 50 indicate?
+		/*
+		 * string location of the file of the svg image x spawning location of
+		 * bbox (and image?) y spawning location of bbox (and image?) how scaled
+		 * the vector image is how "heavy" the.. bbox? is? the diameter of the
+		 * bounding box
+		 */
+		player = new Thing("data/svg/orc.svg", width / 2, 0, .2f, 20, 100);
 		env.addEntity(player);
-		env.addEntity(new Scenery(0, 0, 60, 60, 10));
 
+		Thing testThing = new Thing("data/svg/orc.svg", 100, 0, .2f, 20, 100);
+		env.addEntity(testThing);
+
+		//Create ground object
+		Scenery ground = new Scenery("data/svg/griffin.svg", 0, height, width,
+			1, .02f, 20);
+		//		ground.setPosition(100, 100);
+		ground.getBody().setMoveable(false);
+		//		ground.getBody().setEnabled(true);
+		ground.getBody().setRotatable(false);
+		//		ground.getBody().setFriction(1);
+
+		env.addEntity(ground);
 		this.env = env;
 	}
 
@@ -91,7 +108,7 @@ public class GameState extends BasicGameState {
 			throws SlickException {
 		float width = container.getWidth();
 		float height = container.getHeight();
-		float backPar = 3f;
+		float backPar = 3f; //TODO what is this?
 		float bx = ((-xoffset * backPar) % width) / -width;
 		float by = ((-yoffset * backPar) % height) / -height;
 		background.bind();
