@@ -61,6 +61,8 @@ public class Scenery extends AbstractEntity {
 		svg = VectorUtil.loadSvg(fileLoc);
 		body = new Body(new Box(width, height), mass);
 		body.setPosition(x, y);
+		body.setRotatable(false);
+		body.setMoveable(false);
 		body.setFriction(1f);
 	}
 
@@ -88,9 +90,10 @@ public class Scenery extends AbstractEntity {
 		g.rotate(0, 0, (float) Math.toDegrees(body.getRotation()));
 
 		svg.render(g);
-
-		g.rotate(0, 0, (float) -Math.toDegrees(body.getRotation()));
-		g.translate(-getX(), -getY());
+		//
+		//		g.rotate(0, 0, (float) -Math.toDegrees(body.getRotation()));
+		//		g.translate(-getX(), -getY());
+		g.resetTransform();
 	}
 
 	/**

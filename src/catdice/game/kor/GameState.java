@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 import catdice.game.kor.struct.Environment;
 
@@ -76,26 +77,25 @@ public class GameState extends BasicGameState {
 		env.init();
 
 		/*
-		 * string location of the file of the svg image x spawning location of
-		 * bbox (and image?) y spawning location of bbox (and image?) how scaled
-		 * the vector image is how "heavy" the.. bbox? is? the diameter of the
-		 * bounding box
+		 * string location of the file of the svg image 
+		 * x spawning location of bbox (and image?) 
+		 * y spawning location of bbox (and image?) 
+		 * how scaled the vector image is 
+		 * how "heavy" the.. bbox? is? 
+		 * the diameter of the bounding box
 		 */
-		player = new Thing("data/svg/orc.svg", width / 2, 0, .2f, 20, 100);
-		env.addEntity(player);
+		player = new Thing("data/svg/orc.svg", width / 2, height / 2, .2f, 60,
+			100);
+		Log.info("width is " + width);
 
-		Thing testThing = new Thing("data/svg/orc.svg", 100, 0, .2f, 20, 100);
-		env.addEntity(testThing);
+		Thing testThing = new Thing("data/svg/orc.svg", 0, 0, .2f, 5, 100);
 
 		//Create ground object
-		Scenery ground = new Scenery("data/svg/griffin.svg", 0, height, width,
-			1, .02f, 20);
-		//		ground.setPosition(100, 100);
-		ground.getBody().setMoveable(false);
-		//		ground.getBody().setEnabled(true);
-		ground.getBody().setRotatable(false);
-		//		ground.getBody().setFriction(1);
+		Scenery ground = new Scenery("data/svg/griffin.svg", width / 2, height,
+			width, 1, .0008f, 2);
 
+		env.addEntity(player);
+		env.addEntity(testThing);
 		env.addEntity(ground);
 		this.env = env;
 	}
@@ -137,6 +137,8 @@ public class GameState extends BasicGameState {
 		drawString(g,
 			"Cursors - Move   Ctrl - Jump   B - Show Bounds   R - Restart",
 			(int) (height - 20));
+
+		g.setColor(Color.white);
 	}
 
 	/**
@@ -171,7 +173,7 @@ public class GameState extends BasicGameState {
 		// over and over so is reasonably small. The jump force is a one shot
 		// deal and so is reasonably big
 		float moveForce = 200;
-		float jumpForce = 20000;
+		float jumpForce = 8000000;
 
 		// restart and bounds toggling
 		if (input.isKeyPressed(Input.KEY_R)) {
