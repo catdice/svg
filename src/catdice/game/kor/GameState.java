@@ -60,7 +60,6 @@ public class GameState extends BasicGameState {
 		width = container.getWidth();
 		height = container.getHeight();
 		background = new Image(width, height);
-
 		restart();
 	}
 
@@ -84,18 +83,19 @@ public class GameState extends BasicGameState {
 		 * how "heavy" the.. bbox? is? 
 		 * the diameter of the bounding box
 		 */
-		player = new Thing("data/svg/orc.svg", width / 2, height / 2, .2f, 60,
-			100);
+
+		player = new Thing("data/svg/pinkSquare.svg", width / 2, height / 2,
+			100, 60);
 		Log.info("width is " + width);
 
-		Thing testThing = new Thing("data/svg/orc.svg", 0, 0, .2f, 5, 100);
+		//		Thing testThing = new Thing("data/svg/orc.svg", 0, 0, 100, 5);
 
 		//Create ground object
 		Scenery ground = new Scenery("data/svg/griffin.svg", width / 2, height,
 			width, 1, .0008f, 2);
 
 		env.addEntity(player);
-		env.addEntity(testThing);
+		//		env.addEntity(testThing);
 		env.addEntity(ground);
 		this.env = env;
 	}
@@ -106,8 +106,9 @@ public class GameState extends BasicGameState {
 	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		float width = container.getWidth();
-		float height = container.getHeight();
+		g.setClip(0, 0, width, height);
+		//		float width = container.getWidth();
+		//		float height = container.getHeight();
 		float backPar = 3f; //TODO what is this?
 		float bx = ((-xoffset * backPar) % width) / -width;
 		float by = ((-yoffset * backPar) % height) / -height;
@@ -186,6 +187,9 @@ public class GameState extends BasicGameState {
 
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			player.applyForce(-moveForce, 0);
+		}
+		if (input.isKeyDown(Input.KEY_UP)) {
+			player.applyForce(0, -jumpForce / 10);
 		}
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			player.applyForce(moveForce, 0);

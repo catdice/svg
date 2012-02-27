@@ -41,6 +41,15 @@ public abstract class Actor extends AbstractEntity {
 
 	/** The size of the actor's collision bounds */
 	private float size;
+
+	public float getSize() {
+		return size;
+	}
+
+	public void setSize(float size) {
+		this.size = size;
+	}
+
 	/** The x component of the velocity for the current update */
 	protected float velx;
 

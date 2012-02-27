@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
  * @author kevin
  */
 public interface Entity {
+
 	/**
 	 * Set the world this entity is part of
 	 * 

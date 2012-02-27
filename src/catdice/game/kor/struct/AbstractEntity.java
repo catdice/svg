@@ -3,6 +3,8 @@ package catdice.game.kor.struct;
 import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
 
+import org.newdawn.slick.svg.SimpleDiagramRenderer;
+
 /**
  * The common bits of all entities. A bunch of utility methods and a physical
  * body.
@@ -12,6 +14,15 @@ import net.phys2d.raw.Body;
 public abstract class AbstractEntity implements Entity {
 	/** The physical body representing the entity */
 	protected Body body;
+	protected SimpleDiagramRenderer svg;
+
+	public SimpleDiagramRenderer getSvg() {
+		return svg;
+	}
+
+	public void setSvg(SimpleDiagramRenderer svg) {
+		this.svg = svg;
+	}
 
 	/**
 	 * Set the velocity of the entity
